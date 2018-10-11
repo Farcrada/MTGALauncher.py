@@ -44,7 +44,7 @@ class LAUNCHER:
     
     @staticmethod
     def launchGameAndExit(prefix: str)-> None:
-        bashCommand = "WINEPREFIX=\"" + str(prefix) + "\" wine \"" + str(CurrentPath.joinpath("MTGA.exe")) + "\""
+        bashCommand = "WINEPREFIX=\"{0}\" wine \"{1}\"".format(str(prefix), str(CurrentPath.joinpath("MTGA.exe")))
         print("{0}Printing launching game output, if there are errors please make an issue:\n{1}{2}"
               .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
         #And lastly: Set the version.
@@ -54,7 +54,7 @@ class LAUNCHER:
         
     @staticmethod
     def installAndEndItInPrefixWith(prefix: Path, argument: str):
-        bashCommand = "WINEPREFIX=\"" + str(prefix) + "\" msiexec.exe " + argument
+        bashCommand = "WINEPREFIX=\"{0}\" msiexec.exe {1}".format(str(prefix), argument)
         print("{0}Printing 'msiexec'-file output, if there are errors please make an issue:\n{1}{2}"
               .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
         
@@ -164,7 +164,7 @@ class LAUNCHER:
             
             if pythonConfig['launcher']['version'] is self.version:
                 print("Already up to date:\n\tLaunching MTGA.exe...")
-                LAUNCHER.launchGameAndExit(prefix)
+                LAUNCHER.launchGameAndExit(prefix);
             else:
                 isEXE = ".exe" in url
                 isMSI = ".msi" in url
@@ -175,9 +175,8 @@ class LAUNCHER:
                 #might as well contain it
                 pythonLauncherRegKeysFile = CurrentPath.joinpath("pythonLauncherRegKeys.reg")
                 regKeyLocation = "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Wizards of the Coast\\"
-                bashCommand = "WINEPREFIX=\"" + str(prefix) + "\" wine regedit /E " + "\"" + \
-                              str(pythonLauncherRegKeysFile) + "\" " + \
-                              "\"" + regKeyLocation + configAppName + "\""
+                bashCommand = "WINEPREFIX=\"{0}\" wine regedit /E \"{1}\" \"{2}\""
+                              .format(str(prefix), str(pythonLauncherRegKeysFile), regKeyLocation + configAppName)
                 print("{0}Printing Registry file extraction output, if there are errors please make an issue:\n{1}{2}"
                       .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
                 
@@ -197,7 +196,8 @@ class LAUNCHER:
                 #Get ProductLanguage and trim the quotes
                 try:
                     regProductLanguage = regFile[(regKeyLocation + "MTGArena").replace('\\\\', '\\')]["\"ProductLanguage\""].replace('\"', '')
-                except Exception as e:
+                except:
+                    e = sys.exc_info()[0]
                     print("{0}For some reason we couldn't get the registry entry for ProductLanguage,\n "
                           "open an issue and give as much\n info as possible @ \n "
                           "https://github.com/Farcrada/MTGALauncher.py/issues :\n{1}{2}"
@@ -206,7 +206,8 @@ class LAUNCHER:
                 #Get ProductCode and trim the quotes
                 try:
                     regProductCode = regFile[(regKeyLocation + "MTGArena").replace('\\\\', '\\')]["\"ProductCode\""].replace('\"', '')
-                except Exception as e:
+                except:
+                    e = sys.exc_info()[0]
                     print("{0}For some reason we couldn't get the registry entry for ProductCode,\n "
                           "open an issue and give as much\n info as possible @ \n "
                           "https://github.com/Farcrada/MTGALauncher.py/issues :\n{1}{2}"
@@ -236,10 +237,10 @@ class LAUNCHER:
                             f.write(download)
                         
                         if mtgaInstallerExe.exists():
-                            argument = ("/exelang " + regProductLanguage + " /qr") \
+                            argument = ("/exelang {0} /qr".format(regProductLanguage)) \
                                        if regProductLanguage else "/qr"
-                            bashCommand = "WINEPREFIX=\"" + str(prefix) + "\" wine \"" + \
-                                           str(mtgaInstallerExe) + "\" " + argument
+                            bashCommand = "WINEPREFIX=\"{0}\" wine \"{1}\" {2}"
+                                          .format(str(prefix), str(mtgaInstallerExe), argument)
                             print("{0}Printing Installer file output, if there are errors please make an issue:\n{1}{2}"
                                   .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
                             exit(0)
@@ -247,21 +248,20 @@ class LAUNCHER:
                 #End of isMSI
                 elif regProductCode is None:
                     if regProductLanguage:
-                        argument = ("/i " + url + " TRANSFORMS:" + regProductLanguage + " /qr") \
+                        argument = ("/i {0} TRANSFORMS:{1} /qr".format(url, regProductLanguage)) \
                                    if regProductLanguage is not "1033" else ("/i " + url + " /qr")
                         LAUNCHER.installAndEndItInPrefixWith(prefix, argument)
                     else:
-                        argument = "/i " + url + " /qr"
+                        argument = "/i {0} /qr".format(url)
                         LAUNCHER.installAndEndItInPrefixWith(prefix, argument)
                 #End of `regProductCode is None`
                 elif LAUNCHER.regProductCodeIsSpecific(LAUNCHER.getProductCodeFromConfig(updatedConfig)):
-                    argument = ("/i " + url + " " + " TRANSFORMS:" + regProductLanguage + \
-                                " /qr REINSTALLMODE=vomus REINSTALL=ALL") if regProductLanguage \
-                                else ("/i " + url + " /qr REINSTALLMODE=vomus REINSTALL=ALL")
+                    argument = ("/i {0} TRANSFORMS:{1} /qr REINSTALLMODE=vomus REINSTALL=ALL".format(url, regProductLanguage)) \
+                               if regProductLanguage else ("/i {0} /qr REINSTALLMODE=vomus REINSTALL=ALL".format(url))
                     LAUNCHER.installAndEndItInPrefixWith(prefix, argument)
                 else:
-                    argument = ("/i " + url + " TRANSFORMS:" + regProductLanguage + " /qr") \
-                               if regProductLanguage is not "1033" else ("/i " + url + " /qr")
+                    argument = ("/i {0} TRANSFORMS:{1} /qr".format(url, regProductLanguage)) \
+                               if regProductLanguage is not "1033" else ("/i {0} /qr".format(url))
                     LAUNCHER.installAndEndItInPrefixWith(prefix, argument)
             #And lastly: Set the version.
             self.writeCurrentVersionToConfig()
