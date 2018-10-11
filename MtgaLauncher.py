@@ -47,6 +47,9 @@ class LAUNCHER:
         bashCommand = "WINEPREFIX=\"" + str(prefix) + "\" wine \"" + str(CurrentPath.joinpath("MTGA.exe")) + "\""
         print("{0}Printing launching game output, if there are errors please make an issue:\n{1}{2}"
               .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
+        #And lastly: Set the version.
+        self.writeCurrentVersionToConfig()
+        
         exit(0)
         
     @staticmethod
