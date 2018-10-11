@@ -175,8 +175,8 @@ class LAUNCHER:
                 #might as well contain it
                 pythonLauncherRegKeysFile = CurrentPath.joinpath("pythonLauncherRegKeys.reg")
                 regKeyLocation = "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Wizards of the Coast\\"
-                bashCommand = "WINEPREFIX=\"{0}\" wine regedit /E \"{1}\" \"{2}\""
-                              .format(str(prefix), str(pythonLauncherRegKeysFile), regKeyLocation + configAppName)
+                bashCommand = ("WINEPREFIX=\"{0}\" wine regedit /E \"{1}\" \"{2}\""
+                               .format(str(prefix), str(pythonLauncherRegKeysFile), regKeyLocation + configAppName))
                 print("{0}Printing Registry file extraction output, if there are errors please make an issue:\n{1}{2}"
                       .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
                 
@@ -239,8 +239,8 @@ class LAUNCHER:
                         if mtgaInstallerExe.exists():
                             argument = ("/exelang {0} /qr".format(regProductLanguage)) \
                                        if regProductLanguage else "/qr"
-                            bashCommand = "WINEPREFIX=\"{0}\" wine \"{1}\" {2}"
-                                          .format(str(prefix), str(mtgaInstallerExe), argument)
+                            bashCommand = ("WINEPREFIX=\"{0}\" wine \"{1}\" {2}"
+                                           .format(str(prefix), str(mtgaInstallerExe), argument))
                             print("{0}Printing Installer file output, if there are errors please make an issue:\n{1}{2}"
                                   .format(ANSIColors.yellow, subprocess.check_output(['bash','-c', bashCommand]), ANSIColors.end))
                             exit(0)
