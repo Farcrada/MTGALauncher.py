@@ -1,7 +1,7 @@
 # MTGALauncher.py
 Since the original MTGALauncher doesn't work on Linux without significant botching, I translated it to python. Instead of windows calls it'll make calls to your WINEPREFIX where MTGA is installed.
 
-# ~WARNING!~
+# WARNING!
 This is pretty much untested, this might fuck your MTGA install (WINEPREFIX maybe? But might aswell reinstall if MTGA install is fucked,no?), so make sure you have a back-up (Just duplicate your prefix folder). I doubt we'll be needing this, but nonetheless, I'd love to hear about it, even if it went successfully.
 
 # Use
