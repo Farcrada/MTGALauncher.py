@@ -40,7 +40,7 @@ class LAUNCHER:
         self.pythonConfigFile = CurrentPath.joinpath("PythonConfig.ini")
         self.updatedConfigFile = CurrentPath.joinpath("UpdatedConfig.ini")
         self.updaterModulePath = CurrentPath.joinpath("MTGAUpdater.exe")
-        self.version = "0"
+        self.version = "0.1.856.0"
     
     @staticmethod
     def launchGameAndExit(prefix: str)-> None:
