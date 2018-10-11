@@ -9,4 +9,4 @@ Make sure your `MTGA.exe` tells you your game is out of date and you /NEED/ to r
 
 Place the `MTGALauncher.py` next to the `MTGA.exe` and execute it in a terminal (`./MTGALauncher.py`)
 
-Wait for it to finish and see if `MTGA.exe` will now let you log in. Please do report any issues you have as it'll undoubtedly help the cause.
+Wait for it to finish (it'll launch `MTGA.exe` for you) and see if `MTGA.exe` will now let you log in. Please do report any issues you have as it'll undoubtedly help the cause.
