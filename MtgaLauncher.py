@@ -225,7 +225,7 @@ class LAUNCHER:
                         download = self.getUpdateFile(url)
                         if download is None:
                             print("No update/download link:\n\tLaunching MTGA.exe...")
-                            LAUNCHER.launchGameAndExit(prefix);
+                            LAUNCHER.launchGameAndExit(prefix)
                         
                         if tempDir.exists():
                             shutil.rmtree(tempDir)
