@@ -164,7 +164,7 @@ class LAUNCHER:
             
             if pythonConfig['launcher']['version'] is self.version:
                 print("Already up to date:\n\tLaunching MTGA.exe...")
-                LAUNCHER.launchGameAndExit(prefix);
+                LAUNCHER.launchGameAndExit(prefix)
             else:
                 isEXE = ".exe" in url
                 isMSI = ".msi" in url
