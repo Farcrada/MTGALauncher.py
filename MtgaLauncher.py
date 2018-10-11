@@ -197,8 +197,7 @@ class LAUNCHER:
                 #Get ProductLanguage and trim the quotes
                 try:
                     regProductLanguage = regFile[(regKeyLocation + "MTGArena").replace('\\\\', '\\')]["\"ProductLanguage\""].replace('\"', '')
-                except:
-                    e = sys.exc_info()[0]
+                except Exception as e:
                     print("{0}For some reason we couldn't get the registry entry for ProductLanguage,\n "
                           "open an issue and give as much\n info as possible @ \n "
                           "https://github.com/Farcrada/MTGALauncher.py/issues :\n{1}{2}"
@@ -207,8 +206,7 @@ class LAUNCHER:
                 #Get ProductCode and trim the quotes
                 try:
                     regProductCode = regFile[(regKeyLocation + "MTGArena").replace('\\\\', '\\')]["\"ProductCode\""].replace('\"', '')
-                except:
-                    e = sys.exc_info()[0]
+                except Exception as e:
                     print("{0}For some reason we couldn't get the registry entry for ProductCode,\n "
                           "open an issue and give as much\n info as possible @ \n "
                           "https://github.com/Farcrada/MTGALauncher.py/issues :\n{1}{2}"
