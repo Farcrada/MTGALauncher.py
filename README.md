@@ -1,3 +1,7 @@
+# Pre-text and update:
+It seems that updating with anything besides Windows is a no-go because of the structure of the programs. Which is unfortunate. Because of this it seems this method of updating on Linux does not work. I'll try to find a way in my spare time, but don't get your hopes up. For now re-installing is your best bet.
+
+
 # MTGALauncher.py
 Since the original `MTGALauncher.exe` doesn't work on Linux without significant botching, I translated it to python. Instead of windows calls it'll make calls to your `WINEPREFIX` where `MTGA` is installed.
 
